@@ -105,7 +105,21 @@ public class LZW {
         public static String dicompress() {
             String dicompressedtxt = "";
 
-            // dicompress here
+            dicompressedtxt += dic.get(tags.get(0));
+            dic.add(dic.get(tags.get(0)));
+            for (int i = 1; i < tags.size(); i++) {
+                // Append the first char of the current tag to the end of the last element in the dictionary
+                int lastIndex = dic.size() - 1;
+                dic.set(lastIndex, dic.get(lastIndex) + dic.get(tags.get(i)).charAt(0));
+
+                // Update the processed data with the current tag's value in the dictionary
+                dicompressedtxt += dic.get(tags.get(i));
+
+                // Add the current tag's value (from dictionary) at the end of the dictionary
+                // note: it will be updated at the beginning of the next iteration
+                dic.add(dic.get(tags.get(i)));
+
+            }
 
             return dicompressedtxt;
         }
@@ -129,10 +143,10 @@ public class LZW {
             }
             WriteString(PrintString, "dicOutput.txt");
 
-            // dic.clear();
-            // fillDic();
+            dic.clear();
+            fillDic();
 
-            // String dicompressedtxt = dicompress();
-            // WriteString(dicompressedtxt, "DicompressedOutput.txt");
+            String dicompressedtxt = dicompress();
+            WriteString(dicompressedtxt, "DicompressedOutput.txt");
     }
 }
