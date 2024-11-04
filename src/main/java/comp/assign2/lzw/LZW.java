@@ -67,7 +67,7 @@ public class LZW {
         public static void compress(String txt) {
 
             int i = 0;
-            while (i < txt.length()-1) {
+            while (i < txt.length()) {
                 int j = 0;
                 int lastmatchLocationInDic = 0;
                 int matchlength;
